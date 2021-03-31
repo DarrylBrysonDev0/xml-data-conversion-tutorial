@@ -1,7 +1,3 @@
-##############################################
-# Publish Notes:
-# 
-##############################################
 # imports
 import xml.etree.ElementTree as ET
 import uuid
@@ -71,41 +67,19 @@ def batch_convert_xml_to_df(xml_dir, dataset_columns,file_limit=-1):
     df = pd.DataFrame(converted_dataset, columns = dataset_columns) 
     return df
 
-def set_env_param(paramName,defaultStr):
-    param = os.getenv(paramName)
-    res = defaultStr if not param else param
-    return res
-def main():
-    try:
-        # Constaints 
-        measurement_file_path = set_env_param('SOURCE_FILE_DIR','/home/GenStore/sample-data-set/auto-gen/xml')
-        measurement_file_path = '/'.join([measurement_file_path,'*.xml'])
-        converted_file_dir = set_env_param('TARGET_FILE_DIR','/home/GenStore/sample-data-set/auto-gen/converted')
-        file_process_limit = int(set_env_param('PROCESSING_LIMIT','20')) # Set to -1 for unlimited
-        
-        measurement_columns = ['machine_id','test_id','technician','test_routine','batched','measurement_location_id','x_offset','y_offset','z_offset']
-
-        lab_measurement_df = batch_convert_xml_to_df(measurement_file_path, measurement_columns, file_process_limit)
-
-        # Save dataset to csv using unique name
-        destPath = '/'.join([converted_file_dir,str(uuid.uuid4().hex)])
-        destPath = '.'.join([destPath,'csv'])
-
-        lab_measurement_df.to_csv(destPath, index = False, header=True)
-
-    except Exception as err:
-        print()
-        print("An error occurred while converting batch file")
-        print(str(err))
-        traceback.print_tb(err.__traceback__)
-    return res
-
 if __name__ == '__main__':
-    try:
-        main()
-    except KeyboardInterrupt:
-        print('Interrupted')
-        try:
-            sys.exit(0)
-        except SystemExit:
-            os._exit(0)
+    # Constaints 
+    measurement_file_path = '/home/GenStore/sample-data-set/auto-gen/xml/*.xml'
+    measurement_columns = ['machine_id','test_id','technician','test_routine','batched','measurement_location_id','x_offset','y_offset','z_offset']
+    file_process_limit = 20 # Set to -1 for unlimited
+
+    converted_file_dir = '/home/GenStore/sample-data-set/auto-gen/converted'
+
+    lab_measurement_df = batch_convert_xml_to_df(measurement_file_path, measurement_columns, file_process_limit)
+
+    # Save dataset to csv using unique name
+    destPath = '/'.join([converted_file_dir,str(uuid.uuid4().hex)])
+    destPath = '.'.join([destPath,'csv'])
+
+    lab_measurement_df.to_csv(destPath, index = False, header=True)
+
