@@ -11,7 +11,10 @@ I'll be using a sample lab-measurement-dataset I auto generated in a previous po
 **Conents**
 - [XML Batch Data Processing](#xml-batch-data-processing)
   - [Convert XML to CSV](#convert-xml-to-csv)
-    - [Parsing XML](#parsing-xml)
+    - [Parsing XML: Root element](#parsing-xml-root-element)
+    - [Parsing XML: First level elements](#parsing-xml-first-level-elements)
+    - [Parsing XML: Sub-elements](#parsing-xml-sub-elements)
+    - [XML Parser Class](#xml-parser-class)
   - [Batch Execution](#batch-execution)
   - [Save Converted Dataset](#save-converted-dataset)
   - [TL;DR](#tldr)
@@ -49,10 +52,11 @@ I'll be using a sample lab-measurement-dataset I auto generated in a previous po
 | Machine_03 | 87729203dfce4e9da7efbbb985c83bd9 | Stacey Simpson | d/a/f        | Yes     | loc_2                   | -2.1     | 0.995672 | 4694     |
 | Machine_03 | 98910cae86864c3697e6e7fccfb8cc33 | Brittney Gray  | f/d/a        | Yes     | loc_1                   | 2.5      | 0.236024 | 3034     |
 
-### Parsing XML
+### Parsing XML: Root element
 
 To handel the xml parsing we'll use the `import xml.etree.ElementTree` package. The key to parsing xml is creating a class representing a single file and methods that translate each element. In the example file the first element to isolate will be each `DataFile` for the `DataFiles` collection:  
 
+![DataFile element selection](../assets/DataFile_element.png "DataFile element selection")
 
 ```python
 import xml.etree.ElementTree as ET
@@ -77,10 +81,10 @@ with open(file_path) as f:
     d7ecf46df41f4355a23c42c4607266c7
 
 
-![DataFile element selection](../assets/DataFile_element.png "DataFile element selection")
-
+### Parsing XML: First level elements
 Next extract the 'Header' information for each test
 
+![Header element selection](../assets/test-header-element.png "Header element selection")
 
 ```python
 file_path = '/sample-data-set/auto-gen/xml/a8971cf83bd84fd1b366bfb312278021.xml'
@@ -101,11 +105,10 @@ for data_file in rootElem.findall('DataFile'):
     >>> output:
     ['Machine_03', '9e0f95807ed44a468271eb6d3ff85a44', 'Jennifer Johnson', 'd', 'N/A']
 
-
-![Header element selection](../assets/test-header-element.png "Header element selection")
-
+### Parsing XML: Sub-elements
 Finally, extract the measurement data for `loc_1` and `loc_2` 
 
+![Measurement element selection](../assets/test-measurement-element.png "Measurement element selection")
 
 ```python
 file_path = '/sample-data-set/auto-gen/xml/a8971cf83bd84fd1b366bfb312278021.xml'
@@ -148,10 +151,8 @@ for data_file in rootElem.findall('DataFile'):
     
     ['Machine_03', '9e0f95807ed44a468271eb6d3ff85a44', 'Jennifer Johnson', 'd', 'N/A', 'loc_2', '2.68', '0.575979', '4483']]
 
-
-![Measurement element selection](../assets/test-measurement-element.png "Measurement element selection")
-
-We then place this transformation logic into a class that can be called for any file: 
+### XML Parser Class
+We then place the transformation logic into a class that can be called for any file: 
 
 
 ```python
