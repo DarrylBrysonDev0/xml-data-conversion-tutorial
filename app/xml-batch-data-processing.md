@@ -340,8 +340,6 @@ lab_measurement_df.head()
 </div>
 
 ## TL;DR
-<div>
-<script src="https://gist.github.com/DarrylBrysonDev0/7997fee47ed7f1e9af59d1bdf031c985.js"></script>
-</div>
+Complete script [here](https://github.com/DarrylBrysonDev0/xml-data-conversion-tutorial/blob/main/app/xml-batch-data-processing-complete-script.py)
 
-<script src="https://gist.github.com/2d7ca4eed82764833f8d93a6fea28f15.js"> </script>
+<script src="https://gist.github.com/DarrylBrysonDev0/7997fee47ed7f1e9af59d1bdf031c985.js"></script>
