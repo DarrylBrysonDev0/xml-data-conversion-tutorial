@@ -8,6 +8,13 @@ In this post we'll create a batch data processing script for a typical lab repor
 
 I'll be using a sample lab-measurement-dataset I auto generated in a previous post [here](https://dev.to/darrylbrysondev0/auto-generate-lab-measurement-dataset-59kb). 
 
+**Conents**
+- [XML Batch Data Processing](#xml-batch-data-processing)
+  - [Convert XML to CSV](#convert-xml-to-csv)
+    - [Parsing XML](#parsing-xml)
+  - [Batch Execution](#batch-execution)
+  - [Save Converted Dataset](#save-converted-dataset)
+  - [TL;DR](#tldr)
 ## Convert XML to CSV 
 
 ***Example XML File***
@@ -42,7 +49,7 @@ I'll be using a sample lab-measurement-dataset I auto generated in a previous po
 | Machine_03 | 87729203dfce4e9da7efbbb985c83bd9 | Stacey Simpson | d/a/f        | Yes     | loc_2                   | -2.1     | 0.995672 | 4694     |
 | Machine_03 | 98910cae86864c3697e6e7fccfb8cc33 | Brittney Gray  | f/d/a        | Yes     | loc_1                   | 2.5      | 0.236024 | 3034     |
 
-### Parse XML
+### Parsing XML
 
 To handel the xml parsing we'll use the `import xml.etree.ElementTree` package. The key to parsing xml is creating a class representing a single file and methods that translate each element. In the example file the first element to isolate will be each `DataFile` for the `DataFiles` collection:  
 
@@ -332,4 +339,7 @@ lab_measurement_df.head()
 </table>
 </div>
 
+
+## TL;DR
+<script src="https://gist.github.com/DarrylBrysonDev0/7997fee47ed7f1e9af59d1bdf031c985.js"></script>
 
